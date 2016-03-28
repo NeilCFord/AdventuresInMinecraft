@@ -8,7 +8,12 @@
 
 # Import necessary modules
 import mcpi.minecraft as minecraft
-import mcpi.block as block
+
+# Constants for the block types
+AIR = 0
+FLOWING_WATER = 8
+WATER = 9
+GLASS = 20
 
 # Connect to the Minecraft game
 mc = minecraft.Minecraft.create()
@@ -17,14 +22,14 @@ mc = minecraft.Minecraft.create()
 # This function will be reusable in other programs
 def buildBridge():
   # Get the players position
-  pos = mc.player.getTilePos()
-  
+  x, y, z = mc.player.getTilePos()
+
   # Get the block directly below your player
-  b = mc.getBlock(pos.x, pos.y-1, pos.z)
+  b = mc.getBlock(x, y-1, z)
   # Is the player unsafe?
-  if b == block.AIR.id or b == block.WATER_FLOWING.id or b==block.WATER_STATIONARY.id:
+  if b == AIR or b == FLOWING_WATER or b==WATER:
     # If unsafe, build a glass block directly under the player
-    mc.setBlock(pos.x, pos.y-1, pos.z, block.GLASS.id)
+    mc.setBlock(x, y-1, z, GLASS)
 
 # Game loop
 while True:
@@ -33,5 +38,3 @@ while True:
   buildBridge()
 
 # END
-
-

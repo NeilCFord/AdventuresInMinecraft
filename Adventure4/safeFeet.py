@@ -9,8 +9,12 @@
 
 # Import necessary modules
 import mcpi.minecraft as minecraft
-import mcpi.block as block
 import time
+
+# Constants for the block types
+AIR = 0
+FLOWING_WATER = 8
+WATER = 9
 
 # Connect to the Minecraft game
 mc = minecraft.Minecraft.create()
@@ -19,13 +23,13 @@ mc = minecraft.Minecraft.create()
 # This function will be reusable in other programs
 def safeFeet():
   # Get the players position
-  pos = mc.player.getTilePos()
-  
+  x, y, z = mc.player.getTilePos()
+
   # Get the block directly below your player
-  b = mc.getBlock(pos.x, pos.y-1, pos.z)
+  b = mc.getBlock(x, y-1, z)
 
   # Is the player safe?
-  if b == block.AIR.id or b == block.WATER_STATIONARY.id or b == block.WATER_FLOWING.id:
+  if b == AIR or b == WATER or b == FLOWING_WATER:
     mc.postToChat("not safe")
   else:
     mc.postToChat("safe")
@@ -35,7 +39,6 @@ while True:
   # Run the game loop once every half a second
   time.sleep(0.5)
   # Check if your feet are safe
-  safeFeet()  
+  safeFeet()
 
 # END
-  
